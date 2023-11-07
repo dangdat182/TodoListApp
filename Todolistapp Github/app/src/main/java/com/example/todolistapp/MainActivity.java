@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private EditText editTextpw;
     private EditText editTextUsername;
+    private TextView buttonsignup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         editTextpw = findViewById(R.id.editTextpassword);
         editTextUsername = findViewById(R.id.editTextusername);
         button = findViewById(R.id.buttonlogin);
+        buttonsignup = findViewById(R.id.buttontextsignup);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+            }
+
+
+        });
+        buttonsignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, signup_activity.class);
+                startActivity(intent);
             }
         });
     }

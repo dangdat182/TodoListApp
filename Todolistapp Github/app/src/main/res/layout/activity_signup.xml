@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signup_activity"
-    android:background="@color/xanhnhat">
+    android:background="@color/xanhnhat"
+    tools:context=".signup_activity">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -64,7 +64,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="80dp"
         android:ems="10"
         android:hint="Password"
@@ -83,7 +83,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="80dp"
         android:ems="10"
         android:hint="User name"
@@ -91,6 +91,7 @@
         android:textColor="@color/dennhat"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.568"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -102,7 +103,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="80dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="80dp"
         android:ems="10"
         android:hint="Confirm password"
@@ -110,8 +111,10 @@
         android:textColor="@color/dennhat"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.556"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextpassword1" />
+
     <Button
         android:id="@+id/buttonsignup"
         android:layout_width="166dp"
@@ -136,10 +139,10 @@
         android:id="@+id/buttonggsignin"
         android:layout_width="177dp"
         android:layout_height="62dp"
+        android:backgroundTint="@color/trangnhat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.146"
-        android:backgroundTint="@color/trangnhat"/>
+        app:layout_constraintVertical_bias="0.146" />
 </androidx.constraintlayout.widget.ConstraintLayout>
