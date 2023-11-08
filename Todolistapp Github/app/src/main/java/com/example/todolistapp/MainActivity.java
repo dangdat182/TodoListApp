@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private EditText editTextpw;
     private EditText editTextUsername;
-    private TextView buttonsignup;
+    private TextView buttontextsignup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +38,15 @@ public class MainActivity extends AppCompatActivity {
         editTextpw = findViewById(R.id.editTextpassword);
         editTextUsername = findViewById(R.id.editTextusername);
         button = findViewById(R.id.buttonlogin);
-        buttonsignup = findViewById(R.id.buttontextsignup);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttontextsignup = findViewById(R.id.buttontextsignup);
+        /*button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = editTextUsername.getText().toString();
                 String password = editTextpw.getText().toString();
-                if (username.isEmpty() || password.isEmpty()){
+                if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Can't be left blank ", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Map<String, Object> taskMap1 = new HashMap<>();
                     taskMap1.put("username", username);
                     taskMap1.put("password", password);
@@ -72,11 +71,12 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+
             }
 
 
-        });
-        buttonsignup.setOnClickListener(new View.OnClickListener() {
+        })*/;
+        buttontextsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent();
