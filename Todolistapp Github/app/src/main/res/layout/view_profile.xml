@@ -42,11 +42,11 @@
         app:layout_constraintVertical_bias="0.1" />
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/buttonlogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Edit Profile"
+        android:text="Log out"
         android:textColor="@color/dennhat"
         android:backgroundTint="@color/xanhdam"
         app:layout_constraintEnd_toEndOf="parent"

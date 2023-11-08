@@ -135,7 +135,7 @@
         app:layout_constraintTop_toBottomOf="@id/editTextcomfirmpassword"
         app:layout_constraintVertical_bias="0.954" />
 
-    <com.google.android.gms.common.SignInButton
+    <Button
         android:id="@+id/buttonggsignin"
         android:layout_width="177dp"
         android:layout_height="62dp"
@@ -144,5 +144,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.146" />
+        app:layout_constraintVertical_bias="0.146"
+        android:text="Sign in with Google"
+        android:textStyle="bold"
+        android:textColor="@color/dennhat"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
