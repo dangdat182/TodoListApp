@@ -16,10 +16,26 @@
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonViewProfile"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="57dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="336dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/xanhnhat"
+        android:text=""
+        app:icon="@drawable/baseline_supervised_user_circle_24"
+        app:iconTint="@color/black"
+        app:iconGravity="end"
+        app:iconPadding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonaddnewtask"
@@ -32,6 +48,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_add"/>
-    <include layout="@layout/toolbar"/>
+
+    <include
+        layout="@layout/toolbar"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="-1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

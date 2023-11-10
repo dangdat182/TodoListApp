@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.content.Intent;
 import com.example.todolistapp.Adapter.ToDoAdapter;
 import com.example.todolistapp.Model.ToDoModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.material.button.MaterialButton;
 
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private Query query;
     private ListenerRegistration listenerRegistration;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,18 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         firestore = FirebaseFirestore.getInstance();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+
+        MaterialButton viewProfileButton = findViewById(R.id.buttonViewProfile);
+
+
+        viewProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,4 +105,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         showData();
         toDoAdapter.notifyDataSetChanged();
     }
+
+
+
 }
