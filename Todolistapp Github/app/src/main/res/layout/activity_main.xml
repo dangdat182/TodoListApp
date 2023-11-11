@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="Login"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/dennhat"
                 android:textSize="36sp"
                 android:textStyle="bold" />
 
@@ -65,7 +65,7 @@
                 android:drawablePadding="8dp"
                 android:hint="Username"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/dennhat" />
 
             <EditText
                 android:id="@+id/editTextpassword"
@@ -73,12 +73,11 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/custom_edittext"
-
                 android:drawablePadding="8dp"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/dennhat" />
 
             <Button
                 android:id="@+id/buttonlogin"
@@ -87,7 +86,7 @@
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/xanhnhat"
                 android:text="Login"
-                android:textColor="@color/black"
+                android:textColor="@color/dennhat"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
 
@@ -102,7 +101,7 @@
         android:padding="8dp"
         android:text="Don’t have account ?"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/dennhat"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -137,6 +136,6 @@
         app:layout_constraintVertical_bias="0.146"
         android:text="Sign in with Google"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/dennhat"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

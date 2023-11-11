@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.health.connect.datatypes.units.Length;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -70,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Username or password cannot be blank", Toast.LENGTH_SHORT).show();
                 } else {
-
-
                     firestore.collection("UserID")
                             .whereEqualTo("username", username)
                             .get()
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     } else {Toast.makeText(MainActivity.this, "Wrong password or username", Toast.LENGTH_SHORT).show();
                                     }}
+
                                 else{
                                     // Tên người dùng không tồn tại
                                     Toast.makeText(MainActivity.this, "Wrong password or username", Toast.LENGTH_SHORT).show();
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void Profileactivity() {
         finish();
-        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
     }
 }
