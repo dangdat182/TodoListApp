@@ -95,33 +95,41 @@ public class signup_activity extends AppCompatActivity {
                 }*/
 
                 else{
-
-                    if (password.equals(cfpassword)) {
-                        Map<String, Object> taskMap1 = new HashMap<>();
-                        taskMap1.put("username", username);
-                        taskMap1.put("password", password);
-                        taskMap1.put("Fullname", Fullname);
-                        firestore.collection("UserID").add(taskMap1).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(signup_activity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(signup_activity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    firestore.collection("UserID")
+                            .whereEqualTo("username", username)
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                if (!queryDocumentSnapshots.isEmpty()) {
+                                    Toast.makeText(signup_activity.this, "username already exists", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(signup_activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        Intent intent = new Intent();
-                        intent.setClass(signup_activity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(signup_activity.this, " Confirm password must be as same as password", Toast.LENGTH_SHORT).show();
-                    }
+
+                                else if (password.equals(cfpassword)) {
+                                Map<String, Object> taskMap1 = new HashMap<>();
+                                taskMap1.put("username", username);
+                                taskMap1.put("password", password);
+                                taskMap1.put("Fullname", Fullname);
+                                firestore.collection("UserID").add(taskMap1).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(signup_activity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(signup_activity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(signup_activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                Intent intent = new Intent();
+                                intent.setClass(signup_activity.this, MainActivity.class);
+                                startActivity(intent);
+                                } else {
+                                Toast.makeText(signup_activity.this, " Confirm password must be as same as password", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 }
             }
     });
