@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = editTextUsername.getText().toString().trim();
-                String password = editTextpw.getText().toString().trim();
+                String username = editTextUsername.getText().toString();
+                String password = editTextpw.getText().toString();
 
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Username or password cannot be blank", Toast.LENGTH_SHORT).show();
