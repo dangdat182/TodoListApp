@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.widget.ImageButton;
+
 import com.example.todolistapp.Adapter.ToDoAdapter;
 import com.example.todolistapp.Model.ToDoModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private List<ToDoModel> mylist;
     private Query query;
     private ListenerRegistration listenerRegistration;
+    private ImageButton buttonsort, viewProfileButton;
 
 
     @Override
@@ -49,12 +52,12 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         //actionBar.setTitle("Todo list");
         recyclerView = findViewById(R.id.recyclerview);
         floatingActionButton = findViewById(R.id.buttonaddnewtask);
+        buttonsort= findViewById(R.id.buttonsort);
         firestore = FirebaseFirestore.getInstance();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
 
-        MaterialButton viewProfileButton = findViewById(R.id.buttonViewProfile);
-
+        viewProfileButton = findViewById(R.id.buttonViewProfile);
 
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override

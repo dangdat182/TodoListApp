@@ -36,32 +36,33 @@
                 app:titleTextColor="@color/black" />
 
             <!-- Right most TextView -->
-            <com.google.android.material.button.MaterialButton
+            <!--<com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonViewProfile"
                 style="@style/Widget.MaterialComponents.Button.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
+                android:layout_marginStart="340dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/xanhnhat"
-                android:layout_marginEnd="-30dp"
-                android:textSize="20sp"
                 android:text=""
                 app:icon="@drawable/baseline_people"
+                app:iconGravity="end"
+                app:iconPadding="8dp"
                 app:iconTint="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />-->
 
             <ImageButton
                 android:id="@+id/buttonsort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:background="@color/xanhnhat"
                 android:src="@drawable/baseline_sort"
                 app:layout_constraintEnd_toEndOf="@+id/toolbar"
-                app:layout_constraintHorizontal_bias="0.798"
+                app:layout_constraintHorizontal_bias="0.782"
                 app:layout_constraintStart_toStartOf="@+id/toolbar"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/xanhnhat"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <SearchView
                 android:id="@+id/buttonsearch"
@@ -76,6 +77,21 @@
                 app:layout_constraintStart_toStartOf="@+id/toolbar"
                 app:layout_constraintTop_toTopOf="@+id/toolbar"
                 app:layout_constraintVertical_bias="0.764" />
+
+            <ImageButton
+                android:id="@+id/buttonViewProfile"
+                android:layout_width="55dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/baseline_person"
+                app:iconGravity="end"
+                app:iconPadding="8dp"
+                app:iconTint="@color/black"
+                android:backgroundTint="@color/xanhnhat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.955"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
