@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0a99674-0d12-4928-8fad-8735aab4ab4c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Todolistapp Github/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/layout/view_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/layout/view_profile.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

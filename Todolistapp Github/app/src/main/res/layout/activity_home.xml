@@ -21,21 +21,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonViewProfile"
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="53dp"
         android:layout_height="53dp"
-        android:layout_marginStart="310dp"
+        android:layout_marginStart="340dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/xanhdam"
+        android:backgroundTint="@color/xanhnhat"
         android:text=""
         app:icon="@drawable/baseline_people"
-        app:iconTint="@color/black"
         app:iconGravity="end"
         app:iconPadding="8dp"
+        app:iconTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonaddnewtask"
@@ -50,8 +53,9 @@
         app:srcCompat="@drawable/baseline_add"/>
 
     <include
+        android:id="@+id/include"
         layout="@layout/toolbar"
-        tools:layout_editor_absoluteX="125dp"
-        tools:layout_editor_absoluteY="-1dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
