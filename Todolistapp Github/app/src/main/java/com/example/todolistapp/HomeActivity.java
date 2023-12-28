@@ -3,7 +3,6 @@ package com.example.todolistapp;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 
 import com.example.todolistapp.Adapter.ToDoAdapter;
 import com.example.todolistapp.Model.ToDoModel;
@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private FirebaseFirestore firestore;
     private ToDoAdapter toDoAdapter;
     private List<ToDoModel> mylist;
+    private SearchView searchView;
     private Query query;
     private ListenerRegistration listenerRegistration;
     private ImageButton buttonsort, viewProfileButton;
@@ -47,17 +48,30 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // ActionBar actionBar = getSupportActionBar();
+        // ActionBar actionBar = getSupportActionBar();
         setContentView(R.layout.activity_home);
         //actionBar.setTitle("Todo list");
         recyclerView = findViewById(R.id.recyclerview);
         floatingActionButton = findViewById(R.id.buttonaddnewtask);
         buttonsort= findViewById(R.id.buttonsort);
+        searchView = findViewById(R.id.buttonsearch);
         firestore = FirebaseFirestore.getInstance();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
 
         viewProfileButton = findViewById(R.id.buttonViewProfile);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterTasks(newText);
+                return true;
+            }
+        });
 
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +95,18 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         recyclerView.setAdapter(toDoAdapter);
 
     }
+
+    private void filterTasks(String query) {
+        List<ToDoModel> filteredList = new ArrayList<>();
+
+        for (ToDoModel task : mylist) {
+            if (task.getTask().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(task);
+            }
+        }
+        toDoAdapter.filterList(filteredList);
+    }
+
     private void showData() {
         query = firestore.collection("task").orderBy("time", Query.Direction.DESCENDING );
         listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -107,7 +133,4 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         showData();
         toDoAdapter.notifyDataSetChanged();
     }
-
-
-
 }

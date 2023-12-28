@@ -18,6 +18,7 @@ import com.example.todolistapp.HomeActivity;
 import com.example.todolistapp.Model.ToDoModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> {
@@ -25,9 +26,15 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
     private List<ToDoModel> todolist;
     private HomeActivity activity;
     private FirebaseFirestore firestore;
+    private List<ToDoModel> originalList;
     public ToDoAdapter(HomeActivity homeActivity, List<ToDoModel> todolist){
         this.todolist = todolist;
+        this.originalList = new ArrayList<>(todolist);
         activity = homeActivity;
+    }
+    public void filterList(List<ToDoModel> filteredList) {
+        todolist = filteredList;
+        notifyDataSetChanged();
     }
     @NonNull
     @Override
@@ -51,6 +58,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         Bundle bundle = new Bundle();
         bundle.putString("task" , toDoModel.getTask());
         bundle.putString("due" , toDoModel.getDue());
+        bundle.putString("dueTime",toDoModel.getDueTime());
         bundle.putString("id" , toDoModel.TaskId);
 
         AddNewTask addNewTask = new AddNewTask();
@@ -63,6 +71,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
         ToDoModel toDoModel = todolist.get(position);
         holder.checkbox.setText(toDoModel.getTask());
         holder.DueDate.setText("Due on: " + toDoModel.getDue());
+        holder.DueTime.setText("On: " + toDoModel.getDueTime()); // Đặt văn bản giờ đáo hạn
         holder.checkbox.setChecked(toBoolean(toDoModel.getStatus()));
 
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -88,13 +97,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView DueDate;
+        TextView DueDate, DueTime;
         CheckBox checkbox;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             DueDate = itemView.findViewById(R.id.textviewdate);
             checkbox = itemView.findViewById(R.id.checkbox);
+            DueTime = itemView.findViewById(R.id.textviewtime);
         }
     }
 }

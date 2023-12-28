@@ -1,6 +1,7 @@
 package com.example.todolistapp;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,13 +36,14 @@ import java.util.Map;
 public class AddNewTask extends BottomSheetDialogFragment{
     public static final String TAG = "AddNewTask";
     private EditText edittextaddnewtask;
-    private TextView textViewduedate;
+    private TextView textViewduedate, textViewtime;
     private Button buttonsave;
     private FirebaseFirestore firestore;
     private Context context;
-    private String duedate;
+    private String duedate, duetime;
     private String id ="";
     private String dueDateUpdate ="";
+    private String dueTimeUpdate ="";
     public static AddNewTask newInstance()
     {
         return new AddNewTask();
@@ -55,7 +58,8 @@ public class AddNewTask extends BottomSheetDialogFragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        textViewduedate = view.findViewById(R.id.texviewsetdate);
+        textViewduedate = view.findViewById(R.id.textviewsetdate);
+        textViewtime = view.findViewById(R.id.textviewsettime);
         edittextaddnewtask = view.findViewById(R.id.edittextaddnewtask);
         buttonsave = view.findViewById(R.id.buttonsavenewtask);
 
@@ -69,9 +73,11 @@ public class AddNewTask extends BottomSheetDialogFragment{
             String task = bundle.getString("task");
             id = bundle.getString("id");
             dueDateUpdate = bundle.getString("due");
+            dueTimeUpdate = bundle.getString("dueTime");
 
             edittextaddnewtask.setText(task);
             textViewduedate.setText(dueDateUpdate);
+            textViewtime.setText(dueTimeUpdate);
 
             if (task.length() > 0){
                 buttonsave.setEnabled(false);
@@ -120,13 +126,29 @@ public class AddNewTask extends BottomSheetDialogFragment{
                 datePickerDialog.show();
             }
         });
+        textViewtime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int HOUR = calendar.get(Calendar.HOUR_OF_DAY);
+                int MINUTE = calendar.get(Calendar.MINUTE);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        duetime = String.format("%02d:%02d:%02d", hourOfDay, minute, 0);
+                        textViewtime.setText(textViewtime.getText().toString() + " " + duetime);
+                    }
+                },calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
+                timePickerDialog.show();
+            }
+        });
         boolean finalIsUpdate = isUpdate;
         buttonsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String task = edittextaddnewtask.getText().toString();
                 if (finalIsUpdate){
-                    firestore.collection("task").document(id).update("task" , task , "due" , duedate);
+                    firestore.collection("task").document(id).update("task" , task , "due" , duedate, "dueTime", duetime );
                     Toast.makeText(context, "Task Updated", Toast.LENGTH_SHORT).show();
 
                 }
@@ -137,6 +159,7 @@ public class AddNewTask extends BottomSheetDialogFragment{
                         Map<String, Object> taskMap = new HashMap<>();
                         taskMap.put("task", task);
                         taskMap.put("due", duedate);
+                        taskMap.put("dueTime", duetime);
                         taskMap.put("status", 0);
                         taskMap.put("time", FieldValue.serverTimestamp());
 

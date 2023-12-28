@@ -7,6 +7,20 @@
     android:background="@color/trangnhat"
     tools:context=".AddNewTask">
 
+    <TextView
+        android:id="@+id/textviewsettime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="8dp"
+        android:drawableRight="@drawable/baseline_access_time"
+        android:drawablePadding="8dp"
+        android:text="Set due time"
+        android:textColor="@color/dennhat"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittextaddnewtask" />
+
     <EditText
         android:id="@+id/edittextaddnewtask"
         android:layout_width="match_parent"
@@ -21,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/texviewsetdate"
+        android:id="@+id/textviewsetdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"

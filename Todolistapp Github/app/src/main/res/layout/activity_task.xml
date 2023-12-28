@@ -23,6 +23,21 @@
             android:layout_height="70dp"
             android:background="@color/xanhnhat">
 
+            <TextView
+                android:id="@+id/textviewdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="27dp"
+                android:layout_marginTop="18dp"
+                android:text="12-12-2023"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/checkbox"
+                app:layout_constraintHorizontal_bias="0.051"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/checkbox"
+                app:layout_constraintVertical_bias="0.803" />
+
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkbox"
                 android:textSize="18dp"
@@ -38,19 +53,19 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textviewdate"
+                android:id="@+id/textviewtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="27dp"
                 android:layout_marginTop="18dp"
-                android:text="12-12-2023"
+                android:text="12:30:00"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/checkbox"
-                app:layout_constraintHorizontal_bias="0.051"
+                app:layout_constraintHorizontal_bias="0.564"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/checkbox"
-                app:layout_constraintVertical_bias="0.803" />
+                app:layout_constraintVertical_bias="0.787" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
