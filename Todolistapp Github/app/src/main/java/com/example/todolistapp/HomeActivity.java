@@ -1,5 +1,6 @@
 package com.example.todolistapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +30,8 @@ import android.widget.SearchView;
 
 import com.example.todolistapp.Adapter.ToDoAdapter;
 import com.example.todolistapp.Model.ToDoModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
@@ -36,15 +43,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.material.button.MaterialButton;
 
 import java.security.PrivateKey;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements OnDialogCloseListener {
     private RecyclerView recyclerView;
@@ -59,7 +72,6 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private static final String CHANNEL_ID = "ToDoApp_CID";
     private static final String CHANNEL_NAME = "ToDoApp_CNAME";
     private static final String CHANNEL_DESC = "ToDoApp_DESC";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +122,20 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         itemTouchHelper.attachToRecyclerView(recyclerView);
         showData();
         recyclerView.setAdapter(toDoAdapter);
+        displayNotification();
+    }
 
+    @Override
+    protected void onStart() {
+        displayNotification();
+        super.onStart();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        displayNotification();
+        super.onDestroy();
     }
 
     private void filterTasks(String query) {
@@ -144,54 +169,54 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         });
     }
 
-    private boolean isToday(Date date) {
-        // Lấy ngày hiện tại
-        Date today = new Date();
-        // So sánh ngày của timestamp với ngày hiện tại
-        return android.text.format.DateUtils.isToday(date.getTime());
+    private int getNotificationId(){
+        return (int) new Date().getTime();
     }
-
-    // Hàm lấy timestamp của ngày hiện tại
-    private Date getCurrentDateTimestamp() {
-        return new Date();
+    private String getCurrentDate(){
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault());
+            String dateString = currentDateTime.format(formatter);
+            return dateString;
+        }
+        return null;
     }
     private void displayNotification() {
-        query = firestore.collection("task");
-        CollectionReference collectionRef = firestore.collection("task");
-        Query query = collectionRef.whereEqualTo("time", getCurrentDateTimestamp());
 
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
-                    return;
-                }
-
-                for (DocumentChange dc : value.getDocumentChanges()){
-                    DocumentSnapshot document = dc.getDocument();
-                    if (isToday(document.getDate("time"))) {
-                        // In ra thông báo hoặc thực hiện hành động bạn mong muốn ở đây
-                        // Ví dụ:
-                        String data = document.getString("task");
-                        // Hiển thị thông báo
-                        showNotification(data);
+        firestore.collection("task")
+                .whereEqualTo("due",getCurrentDate())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                String taskName = documentSnapshot.getString("task");
+                                showNotification(taskName);
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(CHANNEL_DESC);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
     }
     private void showNotification (String taskName){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("EXPIRING TASK")
+                .setContentText(taskName + " expires today !")
                 .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Your task is about to expire")
-                .setContentText(taskName + "is expire today !")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        NotificationManagerCompat mNotificationMgr = NotificationManagerCompat.from(this);
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mNotificationMgr.notify(1, mBuilder.build());
+        notificationManagerCompat.notify(getNotificationId(), mBuilder.build());
     }
     @Override
     public void onDialogCLose(DialogInterface dialogInterface) {
