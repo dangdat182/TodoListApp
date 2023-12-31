@@ -49,6 +49,8 @@ import com.google.android.material.button.MaterialButton;
 
 import java.security.PrivateKey;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -127,16 +129,10 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
 
     @Override
     protected void onStart() {
-        displayNotification();
+        //displayNotification();
         super.onStart();
     }
 
-
-    @Override
-    protected void onDestroy() {
-        displayNotification();
-        super.onDestroy();
-    }
 
     private void filterTasks(String query) {
         List<ToDoModel> filteredList = new ArrayList<>();
@@ -192,7 +188,29 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
                                 String taskName = documentSnapshot.getString("task");
-                                showNotification(taskName);
+                                showNotificationExpiresTask(taskName);
+                            }
+                        }
+                    }
+                });
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault());
+        }
+        firestore.collection("task")
+                .whereNotEqualTo("due",getCurrentDate())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                                String taskDate = documentSnapshot.getString("due");
+                                String localDate = getCurrentDate();
+                                if(CheckDate(taskDate,localDate) == false){
+                                    String taskName = documentSnapshot.getString("task");
+                                    showNotificationExpiredTask(taskName);
+                                }
                             }
                         }
                     }
@@ -205,10 +223,41 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             manager.createNotificationChannel(channel);
         }
     }
-    private void showNotification (String taskName){
+    private boolean CheckDate(String dateString1 , String dateString2){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            // Chuyển đổi chuỗi thành kiểu Date
+            Date date1 = dateFormat.parse(dateString1);
+            Date date2 = dateFormat.parse(dateString2);
+            if(date1.after(date2)){
+                return true;
+            }
+            if(date1.before(date2)){
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void showNotificationExpiresTask (String taskName){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("EXPIRING TASK")
+                .setContentTitle("EXPIRING TASK: ")
                 .setContentText(taskName + " expires today !")
+                .setSmallIcon(R.drawable.logo)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        notificationManagerCompat.notify(getNotificationId(), mBuilder.build());
+    }
+    private void showNotificationExpiredTask (String taskName){
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("EXPIRED TASK: ")
+                .setContentText(taskName + "  has expired!")
                 .setSmallIcon(R.drawable.logo)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
