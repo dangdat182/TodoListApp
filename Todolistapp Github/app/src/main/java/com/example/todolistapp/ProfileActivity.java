@@ -3,6 +3,8 @@ package com.example.todolistapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     private GoogleSignInOptions gso;
@@ -64,10 +68,20 @@ public class ProfileActivity extends AppCompatActivity {
         gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                finish();
+                finishAllActivities();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
+    }
+
+    private void finishAllActivities() {
+        // list all activity and finish them
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.AppTask> appTasks = activityManager.getAppTasks();
+
+        for (ActivityManager.AppTask appTask : appTasks) {
+            appTask.finishAndRemoveTask();
+        }
     }
 }
