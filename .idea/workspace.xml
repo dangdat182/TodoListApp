@@ -29,19 +29,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0a99674-0d12-4928-8fad-8735aab4ab4c" name="Changes" comment="Gui thong bao khi task den ngay het han">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/migrations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/drawable/baseline_email_24.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/drawable/gradientbackground.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/ProfileActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/layout/view_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/layout/view_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/AddNewTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/AddNewTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/HomeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/signup_activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/signup_activity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +45,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[192.168.187.106:5555]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Admin\.android\avd\VM_Phone.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/Todolistapp Github">
       <ProjectState />
@@ -113,19 +107,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "last_opened_file_path": "D:/UNG DUNG DI DONG/TodoListApp/Todolistapp Github/app/src/main/res/drawable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/UNG DUNG DI DONG/TodoListApp/Todolistapp Github/app/src/main/res/drawable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\UNG DUNG DI DONG\TodoListApp\Todolistapp Github\app\src\main\res\drawable" />
@@ -150,7 +145,6 @@
       <option name="ALL_USERS" value="false" />
       <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
       <option name="CLEAR_APP_STORAGE" value="false" />
-      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
@@ -226,7 +220,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Todolistapp Github [signing eport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -249,7 +242,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Todolistapp Github [signing report]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -272,7 +264,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Todolistapp Github [signingreport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -294,7 +285,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <recent_temporary>

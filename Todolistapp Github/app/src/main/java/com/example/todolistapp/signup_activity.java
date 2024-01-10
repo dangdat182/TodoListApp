@@ -44,6 +44,10 @@ public class signup_activity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private String collectionName = "UserID";
     private boolean usernameExists = false;
+    private String CreateUserID(){
+        long currentTimeMillis = System.currentTimeMillis();
+        return String.valueOf(currentTimeMillis);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +112,7 @@ public class signup_activity extends AppCompatActivity {
                                 taskMap1.put("username", username);
                                 taskMap1.put("password", password);
                                 taskMap1.put("Fullname", Fullname);
+                                taskMap1.put("UserID",CreateUserID());
                                 firestore.collection("UserID").add(taskMap1).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentReference> task) {

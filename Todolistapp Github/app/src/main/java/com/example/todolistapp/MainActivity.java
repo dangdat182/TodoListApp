@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.health.connect.datatypes.units.Length;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private GoogleSignInClient gsc;
     private GoogleSignInOptions gso;
+    private static final String SHARED_PREF_NAME = "MyPref";
+    private static final String KEY_UID = "123";
+    SharedPreferences sharedPreferences;
+    public static String CurrentUID ;
     int RC_SIGNIN = 20;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         buttontextsignup = findViewById(R.id.buttontextsignup);
         buttonsigningg = findViewById(R.id.buttonsigningg);
         auth = FirebaseAuth.getInstance();
+
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
+
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.webclientid))
                 .requestEmail()
@@ -81,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (password.equals(authpassword)) {
                                         Toast.makeText(MainActivity.this, "Sucesssful", Toast.LENGTH_SHORT).show();
+
+                                        CurrentUID = queryDocumentSnapshots.getDocuments().get(0).getString("UserID");
+                                        Log.i("UID",CurrentUID);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString(KEY_UID,CurrentUID);
+                                        editor.apply();
+
+
                                         finish();
                                         Intent intent = new Intent();
                                         intent.setClass(MainActivity.this, HomeActivity.class);
@@ -113,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 googleSignin();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                CurrentUID = user.getUid();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(KEY_UID,CurrentUID);
+                editor.apply();
+                Log.i("UID","GG UID" + CurrentUID);
             }
         });
     }
@@ -153,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                             userid.put("email", user.getEmail());
                             userid.put("profilephoto", user.getPhotoUrl().toString());
                             firestore.collection("UserIDGG").add(userid);
+
                             //Intent intent = new Intent();
                             //intent.setClass(signup_activity.this, ProfileActivity.class);
                             //startActivity(intent);

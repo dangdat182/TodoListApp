@@ -4,10 +4,13 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +47,10 @@ public class AddNewTask extends BottomSheetDialogFragment{
     private String id ="";
     private String dueDateUpdate ="";
     private String dueTimeUpdate ="";
+    private static final String SHARED_PREF_NAME = "MyPref";
+    private static final String KEY_UID = "123";
+    SharedPreferences sharedPreferences ;
+    public static String CurrentUID ;
     public static AddNewTask newInstance()
     {
         return new AddNewTask();
@@ -64,7 +71,9 @@ public class AddNewTask extends BottomSheetDialogFragment{
         buttonsave = view.findViewById(R.id.buttonsavenewtask);
 
         firestore = FirebaseFirestore.getInstance();
-
+        sharedPreferences = getContext().getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        CurrentUID = sharedPreferences.getString(KEY_UID,null);
+        Log.d("UID","UID add task: "+ CurrentUID);
         boolean isUpdate = false;
 
         final Bundle bundle = getArguments();
@@ -162,7 +171,7 @@ public class AddNewTask extends BottomSheetDialogFragment{
                         taskMap.put("dueTime", duetime);
                         taskMap.put("status", 0);
                         taskMap.put("time", FieldValue.serverTimestamp());
-
+                        taskMap.put("UserID",CurrentUID);
                         firestore.collection("task").add(taskMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
