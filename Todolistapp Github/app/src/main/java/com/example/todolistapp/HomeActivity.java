@@ -98,7 +98,6 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         CurrentUID = sharedPreferences.getString(KEY_UID,null);
         Log.d("Test","Home Activity: "+ CurrentUID);
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -133,6 +132,43 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         showData();
         recyclerView.setAdapter(toDoAdapter);
         displayNotification();
+        buttonsort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sort(v);
+            }
+
+        });
+    }
+    private boolean isSortedByDate = false;
+    private void sortData() {
+        if(isSortedByDate){
+            query = firestore.collection("task").orderBy("time", Query.Direction.DESCENDING);
+            isSortedByDate = false;
+        } else {
+            query = firestore.collection("task").orderBy("time", Query.Direction.ASCENDING);
+            isSortedByDate = true;
+        }
+        listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error){
+                for (DocumentChange documentChange : value.getDocumentChanges()) {
+                    if (documentChange.getType() == DocumentChange.Type.ADDED) {
+                        String id = documentChange.getDocument().getId();
+                        ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
+
+                        mylist.add(toDoModel);
+                        toDoAdapter.notifyDataSetChanged();
+                    }
+                }
+                listenerRegistration.remove();
+
+            }
+        });
+    }
+    public void sort(View view) {
+        mylist.clear();
+        sortData();
     }
 
     @Override
@@ -286,4 +322,5 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         showData();
         toDoAdapter.notifyDataSetChanged();
     }
+
 }
