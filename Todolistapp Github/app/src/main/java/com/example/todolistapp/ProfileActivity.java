@@ -27,19 +27,29 @@ public class ProfileActivity extends AppCompatActivity {
     private GoogleSignInOptions gso;
     private GoogleSignInClient gsc;
     private Button buttonlogout;
-    private TextView profileEmail, profilename;
+    private TextView profileEmail, profilename, doneCount, ongoingCount, outofdateCount;
     private ImageView profileImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // ActionBar actionBar = getSupportActionBar();
         setContentView(R.layout.view_profile);
-
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        assert extras != null;
+        int done = extras.getInt("done");
+        int ongoing = extras.getInt("ongoing");
+        int outofdate = extras.getInt("outofdate");
         buttonlogout = findViewById(R.id.buttonlogout);
         profileEmail = findViewById(R.id.profileEmail);
         profilename = findViewById(R.id.profileName);
         profileImage = findViewById(R.id.profileImage);
-
+        doneCount = findViewById(R.id.doneCount);
+        ongoingCount = findViewById(R.id.ongoingCount);
+        outofdateCount = findViewById(R.id.outOfDateCount);
+        doneCount.setText(String.valueOf(done));
+        ongoingCount.setText(String.valueOf(ongoing));
+        outofdateCount.setText(String.valueOf(outofdate));
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -62,6 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
                 logOut();
             }
         });
+
     }
 
     private void logOut() {

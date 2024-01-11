@@ -79,9 +79,10 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private static final String CHANNEL_ID = "ToDoApp_CID";
     private static final String CHANNEL_NAME = "ToDoApp_CNAME";
     private static final String CHANNEL_DESC = "ToDoApp_DESC";
-
+    private static int done,ongoing,outofdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         // ActionBar actionBar = getSupportActionBar();
         setContentView(R.layout.activity_home);
@@ -111,16 +112,26 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             }
         });
 
-        viewProfileButton.setOnClickListener(new View.OnClickListener() {
+        viewProfileButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
+                countTask();
+                int doneCount = done;
+                int ongoingCount = ongoing;
+                int outofdateCount = outofdate;
+
                 Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                intent.putExtra("done",doneCount);
+                intent.putExtra("ongoing",ongoingCount);
+                intent.putExtra("outofdate",outofdateCount);
                 startActivity(intent);
             }
         });
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                countTask();
                 AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
             }
         });
@@ -139,6 +150,54 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             }
 
         });
+        countTask();
+
+    }
+
+    private void countTask(){
+
+        firestore.collection("task")
+                .whereEqualTo("UserID",CurrentUID)
+                .whereEqualTo("status",1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task){
+                        if(task.isSuccessful()){
+                            done = task.getResult().size();
+                            System.out.println(done);
+
+                        }
+                    }
+                });
+        firestore.collection("task")
+                .whereEqualTo("UserID",CurrentUID)
+                .whereEqualTo("status",0)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task){
+                        if(task.isSuccessful()){
+                            ongoing = task.getResult().size();
+                            System.out.println(ongoing);
+                        }
+                    }
+                });
+        firestore.collection("task")
+                .whereEqualTo("UserID",CurrentUID)
+                .whereNotEqualTo("due",getCurrentDate())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task){
+                        if(task.isSuccessful()){
+                            outofdate = task.getResult().size();
+                            System.out.println(outofdate);
+                        }
+                    }
+
+                });
+
     }
     private boolean isSortedByDate = false;
     private void sortData() {
@@ -151,14 +210,15 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         }
         listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error){
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange documentChange : value.getDocumentChanges()) {
                     if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                        String id = documentChange.getDocument().getId();
-                        ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
-
-                        mylist.add(toDoModel);
-                        toDoAdapter.notifyDataSetChanged();
+                        if (documentChange.getDocument().getString("UserID").equals(CurrentUID)) {
+                            String id = documentChange.getDocument().getId();
+                            ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
+                            mylist.add(toDoModel);
+                            toDoAdapter.notifyDataSetChanged();
+                        }
                     }
                 }
                 listenerRegistration.remove();
