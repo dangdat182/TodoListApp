@@ -61,6 +61,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements OnDialogCloseListener {
     private RecyclerView recyclerView;
@@ -187,14 +188,30 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                 });
         firestore.collection("task")
                 .whereEqualTo("UserID",CurrentUID)
-                .whereNotEqualTo("due",getCurrentDate())
+                .whereEqualTo("status",0)
+                //.whereLessThan("due", Objects.requireNonNull(getCurrentDate()))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task){
                         if(task.isSuccessful()){
-                            outofdate = task.getResult().size();
+                            outofdate = 0;
                             System.out.println(outofdate);
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                if(documentSnapshot.getString("UserID").equals(CurrentUID)) {
+                                    String taskName = documentSnapshot.getString("task");
+                                    String taskDate = documentSnapshot.getString("due");
+                                    String localDate = getCurrentDate();
+                                    try {
+                                        if (!CheckDate(taskDate, localDate)) {
+                                           System.out.println("out of date");
+                                           outofdate++;
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -221,6 +238,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                             ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
                             mylist.add(toDoModel);
                             toDoAdapter.notifyDataSetChanged();
+                            countTask();
                         }
                     }
                 }
@@ -250,6 +268,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             }
         }
         toDoAdapter.filterList(filteredList);
+        countTask();
     }
 
     private void showData() {
