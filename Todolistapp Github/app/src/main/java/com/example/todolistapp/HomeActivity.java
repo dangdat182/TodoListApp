@@ -197,6 +197,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                     }
 
                 });
+        
 
     }
     private boolean isSortedByDate = false;
@@ -205,7 +206,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             query = firestore.collection("task").orderBy("time", Query.Direction.DESCENDING);
             isSortedByDate = false;
         } else {
-            query = firestore.collection("task").orderBy("time", Query.Direction.ASCENDING);
+            query = firestore.collection("task").orderBy("due", Query.Direction.ASCENDING);
             isSortedByDate = true;
         }
         listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
