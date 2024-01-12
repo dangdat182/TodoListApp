@@ -156,7 +156,19 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
         countTask();
 
     }
-
+    private boolean CheckDate(String strDate1,String strDate2){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date1 = simpleDateFormat.parse(strDate1);
+            Date date2 = simpleDateFormat.parse(strDate2);
+            if(date1.before(date2)){return false;}
+            else {
+                return true;
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void countTask(){
 
         firestore.collection("task")
