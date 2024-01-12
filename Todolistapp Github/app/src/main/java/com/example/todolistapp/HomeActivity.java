@@ -238,6 +238,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                             ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
                             mylist.add(toDoModel);
                             toDoAdapter.notifyDataSetChanged();
+                            countTask();
                         }
                     }
                 }
@@ -267,6 +268,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             }
         }
         toDoAdapter.filterList(filteredList);
+        countTask();
     }
 
     private void showData() {
