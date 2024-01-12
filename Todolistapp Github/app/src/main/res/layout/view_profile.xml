@@ -29,16 +29,7 @@
                 android:layout_marginTop="45dp"
                 android:src="@mipmap/profile_view" />
 
-            <TextView
-                android:id="@+id/profileName"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"
-                android:textColor="#fff"
-                android:textStyle="bold"
-                android:textSize="21sp"/>
+
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -156,12 +147,39 @@
             android:layout_marginTop="45dp"
             android:orientation="vertical">
 
+
+
+            <!-- Hiển thị thông tin userName -->
+            <LinearLayout
+                android:id="@+id/usernameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="25dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/baseline_person" />
+
+                <TextView
+                    android:id="@+id/profileName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="No username"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
             <!-- Hiển thị thông tin email -->
             <LinearLayout
+
                 android:id="@+id/emailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="25dp"
                 android:paddingLeft="25dp">
 
                 <ImageView
@@ -175,32 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="20dp"
-                    android:text="Email"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- Hiển thị thông tin userName -->
-            <LinearLayout
-                android:id="@+id/usernameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:orientation="horizontal"
-                android:paddingLeft="25dp">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/baseline_person" />
-
-                <TextView
-                    android:id="@+id/ProfileUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="20dp"
-                    android:text="User Name"
+                    android:text="No email"
                     android:textStyle="bold" />
 
             </LinearLayout>

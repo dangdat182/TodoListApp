@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private static final String CHANNEL_NAME = "ToDoApp_CNAME";
     private static final String CHANNEL_DESC = "ToDoApp_DESC";
     private static int done,ongoing,outofdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -120,11 +121,12 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                 int doneCount = done;
                 int ongoingCount = ongoing;
                 int outofdateCount = outofdate;
-
+                String currentID = CurrentUID;
                 Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
                 intent.putExtra("done",doneCount);
                 intent.putExtra("ongoing",ongoingCount);
                 intent.putExtra("outofdate",outofdateCount);
+                intent.putExtra("CurrentUID",currentID);
                 startActivity(intent);
             }
         });
