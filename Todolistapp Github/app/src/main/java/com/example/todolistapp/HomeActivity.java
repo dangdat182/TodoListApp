@@ -289,7 +289,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     }
     private void displayNotification() {
         firestore.collection("task")
-                .whereEqualTo("due",getCurrentDate())
+                //.whereEqualTo("due",getCurrentDate())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -297,36 +297,29 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                         if(task.isSuccessful())
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                 if(documentSnapshot.getString("UserID").equals(CurrentUID)) {
-                                    String taskName = documentSnapshot.getString("task");
-                                    showNotificationExpiresTask(taskName);
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                    try {
+                                        Date TaskDate = dateFormat.parse(documentSnapshot.getString("due"));
+                                        Date CurrentDate = dateFormat.parse(getCurrentDate());
+                                        if(TaskDate.equals(CurrentDate)){
+                                            String taskName = documentSnapshot.getString("task");
+                                            showNotificationExpiresTask(taskName);
+                                        }
+                                        if(TaskDate.before(CurrentDate)){
+                                            String taskName = documentSnapshot.getString("task");
+                                            showNotificationExpiredTask(taskName);
+                                        }
+                                    } catch (ParseException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                 }
                             }
                     }
                 });
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy", Locale.getDefault());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault());
         }
-        firestore.collection("task")
-                .whereNotEqualTo("due",getCurrentDate())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                                if(documentSnapshot.getString("UserID").equals(CurrentUID)) {
-                                    String taskDate = documentSnapshot.getString("due");
-                                    String localDate = getCurrentDate();
-                                    if (CheckDate(taskDate, localDate) == false) {
-                                        String taskName = documentSnapshot.getString("task");
-                                        showNotificationExpiredTask(taskName);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
@@ -334,23 +327,6 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-    }
-    private boolean CheckDate(String dateString1 , String dateString2){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
-        try {
-            // Chuyển đổi chuỗi thành kiểu Date
-            Date date1 = dateFormat.parse(dateString1);
-            Date date2 = dateFormat.parse(dateString2);
-            if(date1.after(date2)){
-                return true;
-            }
-            if(date1.before(date2)){
-                return false;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     private void showNotificationExpiresTask (String taskName){
