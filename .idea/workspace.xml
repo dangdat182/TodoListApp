@@ -44,10 +44,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0a99674-0d12-4928-8fad-8735aab4ab4c" name="Changes" comment="Gui thong bao khi task den ngay het han">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/HomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/java/com/example/todolistapp/ProfileActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/layout/view_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Todolistapp Github/app/src/main/res/layout/view_profile.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +56,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[cadir4pj7dwwpnib]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Admin\.android\avd\VM_Phone.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/Todolistapp Github">
       <ProjectState />
@@ -157,7 +156,6 @@
       <option name="ALL_USERS" value="false" />
       <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
       <option name="CLEAR_APP_STORAGE" value="false" />
-      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
       <option name="CLEAR_LOGCAT" value="false" />
@@ -233,7 +231,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Todolistapp Github [signing eport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -256,7 +253,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Todolistapp Github [signing report]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -279,7 +275,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <configuration name="Todolistapp Github [signingreport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -301,7 +296,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
       <method v="2" />
     </configuration>
     <recent_temporary>
