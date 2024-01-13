@@ -218,6 +218,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                                         if (!CheckDate(taskDate, localDate)) {
                                            System.out.println("out of date");
                                            outofdate++;
+                                           ongoing--;
                                         }
                                     } catch (Exception e) {
                                         e.printStackTrace();
