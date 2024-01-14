@@ -89,7 +89,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="On Going"
+                        android:text="On Date"
                         android:textSize="20sp" />
 
                     <TextView
@@ -211,7 +211,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="120dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="250dp"
             android:backgroundTint="@color/xanhdam"
             android:text="LOG OUT"
             android:textColor="@color/white" />
