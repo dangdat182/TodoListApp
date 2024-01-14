@@ -26,6 +26,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         buttontextsignup = findViewById(R.id.buttontextsignup);
         buttonsigningg = findViewById(R.id.buttonsigningg);
         auth = FirebaseAuth.getInstance();
-
+        FirebaseApp.initializeApp(this);
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -129,13 +130,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 googleSignin();
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser user = mAuth.getCurrentUser();
-                CurrentUID = user.getUid();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(KEY_UID,CurrentUID);
-                editor.apply();
-                Log.i("UID","GG UID" + CurrentUID);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(user != null){
+                    CurrentUID = user.getProviderId();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(KEY_UID,CurrentUID);
+                    editor.apply();
+                    Log.i("UID","GG UID" + CurrentUID);
+                }
             }
         });
     }

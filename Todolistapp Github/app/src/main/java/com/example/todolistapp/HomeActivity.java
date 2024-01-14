@@ -10,7 +10,9 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -100,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         CurrentUID = sharedPreferences.getString(KEY_UID,null);
-        Log.d("Test","Home Activity: "+ CurrentUID);
+        Log.d("UserID","Home: "+ CurrentUID);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -157,20 +159,21 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
 
     }
     private boolean CheckDate(String strDate1,String strDate2){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d/M/yyyy");
         try {
             Date date1 = simpleDateFormat.parse(strDate1);
             Date date2 = simpleDateFormat.parse(strDate2);
-            if(date1.before(date2)){return false;}
-            else {
-                return true;
-            }
+            // Sử dụng compareTo để so sánh
+
+            if(date1.before(date2)){ return false;}
+            else {return true;}
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            // Xử lý lỗi chuyển đổi ngày
+            return false;
         }
     }
     private void countTask(){
-
         firestore.collection("task")
                 .whereEqualTo("UserID",CurrentUID)
                 .whereEqualTo("status",1)
@@ -210,7 +213,6 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                             outofdate = 0;
                             System.out.println(outofdate);
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                if(documentSnapshot.getString("UserID").equals(CurrentUID)) {
                                     String taskName = documentSnapshot.getString("task");
                                     String taskDate = documentSnapshot.getString("due");
                                     String localDate = getCurrentDate();
@@ -226,7 +228,6 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
                                 }
                             }
                         }
-                    }
 
                 });
         
@@ -235,10 +236,14 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private boolean isSortedByDate = false;
     private void sortData() {
         if(isSortedByDate){
-            query = firestore.collection("task").orderBy("time", Query.Direction.DESCENDING);
+            query = firestore.collection("task")
+                    .whereEqualTo("UserID",CurrentUID)
+                    .orderBy("time", Query.Direction.DESCENDING);
             isSortedByDate = false;
         } else {
-            query = firestore.collection("task").orderBy("due", Query.Direction.ASCENDING);
+            query = firestore.collection("task")
+                    .whereEqualTo("UserID",CurrentUID)
+                    .orderBy("due", Query.Direction.ASCENDING);
             isSortedByDate = true;
         }
         listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -246,13 +251,11 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange documentChange : value.getDocumentChanges()) {
                     if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                        if (documentChange.getDocument().getString("UserID").equals(CurrentUID)) {
                             String id = documentChange.getDocument().getId();
                             ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
                             mylist.add(toDoModel);
                             toDoAdapter.notifyDataSetChanged();
                             countTask();
-                        }
                     }
                 }
                 listenerRegistration.remove();
@@ -285,25 +288,25 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     }
 
     private void showData() {
+        Log.i("UserID","SHOW TASK"+ CurrentUID);
         query = firestore.collection("task")
+                .whereEqualTo("UserID",CurrentUID)
                 .orderBy("time", Query.Direction.DESCENDING);
-                //.whereEqualTo("UserID",CurrentUID);
         listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange documentChange : value.getDocumentChanges()) {
-                    if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                        if (documentChange.getDocument().getString("UserID").equals(CurrentUID)) {
+                    Log.i("UserID","Get UID "+documentChange.getDocument().getString("UserID"));
+                        if (documentChange.getType() == DocumentChange.Type.ADDED) {
                             String id = documentChange.getDocument().getId();
                             ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
                             mylist.add(toDoModel);
                             toDoAdapter.notifyDataSetChanged();
                         }
                     }
+                    listenerRegistration.remove();
                 }
-                listenerRegistration.remove();
 
-            }
         });
     }
 
@@ -321,33 +324,19 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     }
     private void displayNotification() {
         firestore.collection("task")
-                //.whereEqualTo("due",getCurrentDate())
+                .whereEqualTo("due",getCurrentDate())
+                .whereEqualTo("UserID",CurrentUID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful())
                             for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                if(documentSnapshot.getString("UserID").equals(CurrentUID)) {
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                                    try {
-                                        Date TaskDate = dateFormat.parse(documentSnapshot.getString("due"));
-                                        Date CurrentDate = dateFormat.parse(getCurrentDate());
-                                        if(TaskDate.equals(CurrentDate)){
-                                            String taskName = documentSnapshot.getString("task");
-                                            showNotificationExpiresTask(taskName);
-                                        }
-                                        if(TaskDate.before(CurrentDate)){
-                                            String taskName = documentSnapshot.getString("task");
-                                            showNotificationExpiredTask(taskName);
-                                        }
-                                    } catch (ParseException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }
+                                    showNotificationExpiresTask(documentSnapshot.getString("task"));
                             }
                     }
                 });
+
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault());
@@ -360,6 +349,8 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
             manager.createNotificationChannel(channel);
         }
     }
+
+
 
     private void showNotificationExpiresTask (String taskName){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
