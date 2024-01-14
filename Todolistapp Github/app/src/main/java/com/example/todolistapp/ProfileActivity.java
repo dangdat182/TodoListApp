@@ -58,7 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
         doneCount.setText(String.valueOf(done));
         ongoingCount.setText(String.valueOf(ongoing));
         outofdateCount.setText(String.valueOf(outofdate));
-        Log.d("Test","Home Activity: "+ currentID);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();

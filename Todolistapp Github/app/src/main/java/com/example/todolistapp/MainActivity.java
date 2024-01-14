@@ -132,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
                 googleSignin();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if(user != null){
-                    CurrentUID = user.getProviderId();
+                    CurrentUID = user.getUid();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(KEY_UID,CurrentUID);
                     editor.apply();
-                    Log.i("UID","GG UID" + CurrentUID);
+                    Log.i("UID","GG UID " + CurrentUID);
                 }
             }
         });

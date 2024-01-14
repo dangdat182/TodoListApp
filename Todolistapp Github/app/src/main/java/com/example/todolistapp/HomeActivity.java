@@ -290,13 +290,12 @@ public class HomeActivity extends AppCompatActivity implements OnDialogCloseList
     private void showData() {
         Log.i("UserID","SHOW TASK"+ CurrentUID);
         query = firestore.collection("task")
-                .whereEqualTo("UserID",CurrentUID)
-                .orderBy("time", Query.Direction.DESCENDING);
+                .whereEqualTo("UserID",CurrentUID);
+                //.orderBy("time", Query.Direction.DESCENDING);
         listenerRegistration = query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 for (DocumentChange documentChange : value.getDocumentChanges()) {
-                    Log.i("UserID","Get UID "+documentChange.getDocument().getString("UserID"));
                         if (documentChange.getType() == DocumentChange.Type.ADDED) {
                             String id = documentChange.getDocument().getId();
                             ToDoModel toDoModel = documentChange.getDocument().toObject(ToDoModel.class).withId(id);
